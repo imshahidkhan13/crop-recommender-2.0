@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="text-center mb-5">
+  <h1 class="display-5">Top Recommendations</h1>
+  <p class="lead">Based on your input, these are the most suitable crops.</p>
+</div>
+<div class="row">
+  {% for crop in predictions %}
+  <div class="col-lg-4 d-flex align-items-stretch mb-4">
+    <div class="card w-100 shadow-sm">
+      <img src="{{ crop.image_url }}" class="card-img-top" alt="Image of {{ crop.name }}" style="height: 200px; object-fit: cover;">
+      <div class="card-body d-flex flex-column">
+        <h3 class="card-title text-success">{{ loop.index }}. {{ crop.name }}</h3>
+        <h6 class="card-subtitle mb-2">{{ crop.probability }} Confidence</h6>
+        <p class="card-text">{{ crop.description }}</p>
+        <p class="card-text flex-grow-1 fst-italic text-white-50">"{{ crop.fact }}"</p>
+        <a href="/" class="btn btn-outline-success mt-auto">Try Again</a>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% endblock %}

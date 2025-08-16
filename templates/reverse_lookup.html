@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-md-10">
+    <h2 class="card-title text-center mb-4">Find Ideal Growing Conditions</h2>
+    <form action="/reverse_lookup" method="post">
+      <div class="mb-3">
+        <label for="crop-select" class="form-label">Select a Crop:</label>
+        <select class="form-select" id="crop-select" name="crop_name" required>
+          <option value="" disabled selected>Select a crop here...</option>
+          {% for crop in crops %}
+            <option value="{{ crop }}">{{ crop.capitalize() }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="d-grid">
+        <button type="submit" class="btn btn-success">Get Conditions</button>
+      </div>
+    </form>
+    
+    {% if crop_selected %}
+    <div class="card mt-4">
+      <div class="card-header bg-success text-white">
+        <h4>Ideal Conditions for {{ conditions.label.capitalize() }}</h4>
+      </div>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item d-flex justify-content-between align-items-center">Nitrogen (N)<span class="badge bg-primary rounded-pill">{{ "{:.0f}".format(conditions.N_min) }} - {{ "{:.0f}".format(conditions.N_max) }}</span></li>
+        <li class="list-group-item d-flex justify-content-between align-items-center">Phosphorus (P)<span class="badge bg-primary rounded-pill">{{ "{:.0f}".format(conditions.P_min) }} - {{ "{:.0f}".format(conditions.P_max) }}</span></li>
+        <li class="list-group-item d-flex justify-content-between align-items-center">Potassium (K)<span class="badge bg-primary rounded-pill">{{ "{:.0f}".format(conditions.K_min) }} - {{ "{:.0f}".format(conditions.K_max) }}</span></li>
+        <li class="list-group-item d-flex justify-content-between align-items-center">Temperature (°C)<span class="badge bg-danger rounded-pill">{{ "{:.1f}".format(conditions.temperature_min) }} - {{ "{:.1f}".format(conditions.temperature_max) }}</span></li>
+        <li class="list-group-item d-flex justify-content-between align-items-center">Humidity (%)<span class="badge bg-info rounded-pill">{{ "{:.1f}".format(conditions.humidity_min) }} - {{ "{:.1f}".format(conditions.humidity_max) }}</span></li>
+        <li class="list-group-item d-flex justify-content-between align-items-center">Soil pH<span class="badge bg-secondary rounded-pill">{{ "{:.1f}".format(conditions.ph_min) }} - {{ "{:.1f}".format(conditions.ph_max) }}</span></li>
+        <li class="list-group-item d-flex justify-content-between align-items-center">Rainfall (mm)<span class="badge bg-warning rounded-pill">{{ "{:.1f}".format(conditions.rainfall_min) }} - {{ "{:.1f}".format(conditions.rainfall_max) }}</span></li>
+      </ul>
+    </div>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}
