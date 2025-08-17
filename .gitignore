@@ -1,0 +1,11 @@
+# .gitignore
+
+# Environment folder
+venv/
+
+# Python cache
+__pycache__/
+
+# Generated model and data files
+crop_model.joblib
+crop_ranges.csv
